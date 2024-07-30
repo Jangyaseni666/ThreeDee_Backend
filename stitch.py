@@ -17,17 +17,23 @@ def stitch_images(image_paths, output_path):
         print("No images to stitch")
         return False
 
-    stitcher = cv2.Stitcher.create(cv2.STITCHER_SCANS)
-    stitcher.setPanoConfidenceThresh(0.5)
-    status, pano = stitcher.stitch(images)
+    print("[INFO] stacking images...")
+    stitched = cv2.hconcat(images)
 
-    if status != cv2.Stitcher_OK:
-        print(f"Error stitching images. Status code: {status}")
-        return False
-
-    cv2.imwrite(output_path, pano)
-    print(f"Panorama created at {output_path}")
+    # save the output image
+    cv2.imwrite(output_path, stitched)
     return True
+#     stitcher = cv2.Stitcher.create(cv2.STITCHER_SCANS)
+#     stitcher.setPanoConfidenceThresh(0.5)
+#     status, pano = stitcher.stitch(images)
+
+#     if status != cv2.Stitcher_OK:
+#         print(f"Error stitching images. Status code: {status}")
+#         return False
+
+#     cv2.imwrite(output_path, pano)
+#     print(f"Panorama created at {output_path}")
+#     return True
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
